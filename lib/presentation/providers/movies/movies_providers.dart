@@ -5,6 +5,7 @@ import 'package:cinemapedia/domain/entities/movie.dart';
 final nowPlayingMoviesProvider = StateNotifierProvider<MoviesNotifier, List<Movie>>((ref){
 
   final fetchMoreMovies = ref.watch(moviesRepositoryProvider).getNowPlaying;
+  
   return MoviesNotifier(
     fetchMoreMovies: fetchMoreMovies,
   );
