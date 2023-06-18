@@ -15,6 +15,7 @@ dependencies:
   go_router: ^8.0.1
 
 dev_dependencies:
+  card_swiper: ^2.0.4
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
