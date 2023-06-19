@@ -43,17 +43,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
         const CustomAppbar(),
 
-        Expanded(
-          child: ListView.builder(
-            itemCount: nowPlayingMovies.length,
-            itemBuilder: (context, index) {
-              final movie = nowPlayingMovies[index];
-        
-              return ListTile(
-                title: Text(movie.title),
-              );
-            },),
-        )
+        MoviesSlideShow(movies: nowPlayingMovies),
 
       ],
     );
