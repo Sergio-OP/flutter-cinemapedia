@@ -30,24 +30,72 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   void initState() {
     super.initState();
     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+    ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(topRatedMoviesProvider.notifier).loadNextPage();
+    ref.read(upcomingMoviesProvider.notifier).loadNextPage();
   }
 
   @override
   Widget build(BuildContext context) {
 
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    final popularMovies = ref.watch(popularMoviesProvider);
+    final topRatedMovies = ref.watch(topRatedMoviesProvider);
+    final upcomingMovies = ref.watch(upcomingMoviesProvider);
     final moviesSlideShow = ref.watch(moviesSlideShowProvider);
 
-    return Column(
-      children: [
+    return CustomScrollView(
+      slivers: [
 
-        const CustomAppbar(),
+        const SliverAppBar(
+          flexibleSpace: CustomAppbar(),
+          floating: true,
+        ),
 
-        MoviesSlideShow(movies: moviesSlideShow),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => Column(
+              children: [
+          
+                MoviesSlideShow(movies: moviesSlideShow),
+          
+                MoviesHorizontalListView(
+                  movies: nowPlayingMovies, 
+                  title: 'Now Playing', 
+                  subtitle: 'Monday 19',
+                  loadNextPage: () => ref.read(nowPlayingMoviesProvider.notifier).loadNextPage(),
+                ),
 
-        MoviesHorizontalListView(movies: nowPlayingMovies, title: 'Now Playing', subtitle: 'Monday 19',),
+                MoviesHorizontalListView(
+                  movies: upcomingMovies, 
+                  title: 'Soon', 
+                  subtitle: 'This month',
+                  loadNextPage: () => ref.read(upcomingMoviesProvider.notifier).loadNextPage(),
+                ),
 
-      ],
+                MoviesHorizontalListView(
+                  movies: topRatedMovies, 
+                  title: 'Top Rated', 
+                  subtitle: 'All Times',
+                  loadNextPage: () => ref.read(topRatedMoviesProvider.notifier).loadNextPage(),
+                ),
+
+                MoviesHorizontalListView(
+                  movies: popularMovies, 
+                  title: 'Most Popular', 
+                  //subtitle: 'All Times',
+                  loadNextPage: () => ref.read(popularMoviesProvider.notifier).loadNextPage(),
+                ),
+
+                const SizedBox(height: 10,),
+          
+              ],
+            ),
+            childCount: 1,
+            ),
+            
+            )
+      ], 
     );
   }
 }
