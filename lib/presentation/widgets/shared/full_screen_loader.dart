@@ -8,7 +8,7 @@ class FullScreenLoader extends StatelessWidget {
     final List<String> loadingMessages = [
       'Loading movies',
       'Cooking popcorns',
-      'Calling to my girlfriend'
+      'Calling to my girlfriend',
       'Almost finished',
       'Loading top rated',
       'This is taking more of waited...',
