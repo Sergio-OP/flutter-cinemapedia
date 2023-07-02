@@ -24,24 +24,96 @@ class MovieScreenState extends ConsumerState<MovieScreen> {
   Widget build(BuildContext context) {
     final Movie? movie = ref.watch(movieInfoProvider)[widget.movieId];
 
-    if (movie == null)
+    if (movie == null) {
       return const Scaffold(
           body: Center(
         child: CircularProgressIndicator(
           strokeWidth: 2,
         ),
       ));
+    }
 
     return Scaffold(
       body: CustomScrollView(
         physics: const ClampingScrollPhysics(),
         slivers: [
           _CustomSilverAppbar(movie: movie),
+
+          SliverList(delegate: SliverChildBuilderDelegate(
+            (context, index) => _MovieDetails(movie: movie),
+            childCount: 1,
+          ))
         ],
       ),
     );
   }
 }
+
+class _MovieDetails extends StatelessWidget {
+
+  final Movie movie;
+
+  const _MovieDetails({required this.movie});
+
+  @override
+  Widget build(BuildContext context) {
+
+    final textStyles = Theme.of(context).textTheme;
+    final size = MediaQuery.of(context).size;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(padding: const EdgeInsets.all(8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadiusDirectional.circular(20),
+              child: Image.network(
+                movie.posterPath,
+                width: size.width*0.3,
+              ),
+            ),
+
+        const SizedBox(width: 10,),
+
+        SizedBox(
+          width: (size.width*0.7 ) - 26,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(movie.title, style: textStyles.titleLarge,),
+              Text(movie.overview)
+            ],
+          ),
+        )  
+      ],
+        ),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Wrap(
+            children: [
+              ...movie.genreIds.map((genre) => Container(
+                margin: const EdgeInsets.only(right: 10),
+                child: Chip(
+                  label: Text(genre),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                ),
+              ))
+            ],
+          ),
+        ),
+
+        // TODO: mostrar actores en listview
+        const SizedBox(height: 100,)
+      ],
+    );
+  }
+}
+
 
 class _CustomSilverAppbar extends StatelessWidget {
   final Movie movie;
