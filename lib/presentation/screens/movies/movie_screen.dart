@@ -110,12 +110,73 @@ class _MovieDetails extends StatelessWidget {
         ),
 
         // TODO: mostrar actores en listview
-        const SizedBox(height: 100,)
+        _ActorsByMovie(movieid: movie.id.toString()),
+
+        const SizedBox(height: 10,)
       ],
     );
   }
 }
 
+class _ActorsByMovie extends ConsumerWidget {
+
+  final String movieid;
+
+  const _ActorsByMovie({required this.movieid});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final actorsByMovie = ref.watch(actorsByMovieProvider);
+
+    if(actorsByMovie[movieid] == null) return const CircularProgressIndicator(strokeWidth: 2);
+    
+    final actors = actorsByMovie[movieid]!;
+    
+    return SizedBox(
+      height: 300,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: actors.length,
+        itemBuilder: (context, index) {
+          final actor = actors[index];
+          return Container(
+            padding: const EdgeInsets.all(8.0),
+            width: 135,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Actor photo
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    actor.profilePath,
+                    height: 180,
+                    width: 135,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+
+                const SizedBox(height: 5,),
+                // Nombre
+                Text(
+                  actor.name,
+                  maxLines: 2,
+                ),
+
+                Text(
+                  actor.character ?? '', 
+                  maxLines: 2,
+                  style: const TextStyle(fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),
+                  )
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
 
 class _CustomSilverAppbar extends StatelessWidget {
   final Movie movie;
