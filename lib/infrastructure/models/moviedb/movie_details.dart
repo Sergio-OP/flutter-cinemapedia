@@ -113,8 +113,8 @@ class MovieDetails {
 class BelongsToCollection {
     final int id;
     final String name;
-    final String posterPath;
-    final String backdropPath;
+    final String? posterPath;
+    final String? backdropPath;
 
     BelongsToCollection({
         required this.id,
@@ -160,7 +160,7 @@ class Genre {
 
 class ProductionCompany {
     final int id;
-    final String logoPath;
+    final String? logoPath;
     final String name;
     final String originCountry;
 
