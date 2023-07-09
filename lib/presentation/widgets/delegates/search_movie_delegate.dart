@@ -12,7 +12,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
   StreamController<List<Movie>> debouncedMovies = StreamController.broadcast();
   Timer? _debounceTimer;
 
-  SearchMovieDelegate(this.searchMovies);
+  SearchMovieDelegate({required this.searchMovies});
 
   void _onQueryChanged(String query){
     if(_debounceTimer?.isActive ?? false) _debounceTimer!.cancel();
