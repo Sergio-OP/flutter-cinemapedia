@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:animate_do/animate_do.dart';
 import 'package:cinemapedia/domain/entities/movie.dart';
 import 'package:cinemapedia/presentation/providers/providers.dart';
 
@@ -181,6 +181,13 @@ class _ActorsByMovie extends ConsumerWidget {
   }
 }
 
+final isFavoriteProvider = FutureProvider.family.autoDispose((ref, int movieId){
+
+  final localStorageRepository = ref.watch(localStorageRepositoryProvider);
+  return localStorageRepository.isMovieFavorite(movieId);
+
+});
+
 class _CustomSilverAppbar extends ConsumerWidget {
   final Movie movie;
 
@@ -188,6 +195,9 @@ class _CustomSilverAppbar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    final isFavoriteMovieFuture = ref.watch(isFavoriteProvider(movie.id));
+
     final size = MediaQuery.of(context).size;
 
     return SliverAppBar(
@@ -199,9 +209,19 @@ class _CustomSilverAppbar extends ConsumerWidget {
           onPressed: () {
             ref.watch(localStorageRepositoryProvider)
               .toggleFavorite(movie);
+
+            ref.invalidate(isFavoriteProvider(movie.id));
+            
           }, 
-          icon: const Icon(Icons.favorite_border),
-          // icon: const Icon(Icons.favorite_rounded, color: Colors.red,)
+          icon: isFavoriteMovieFuture.when(
+            data: (isFavoriteMovie){
+              return isFavoriteMovie
+              ? const Icon(Icons.favorite_rounded, color: Colors.red,)
+              : const Icon(Icons.favorite_border);
+            } , 
+            error: (_, __) => throw UnimplementedError(), 
+            loading: () => const CircularProgressIndicator(strokeWidth: 2.0,),
+          ),
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(
