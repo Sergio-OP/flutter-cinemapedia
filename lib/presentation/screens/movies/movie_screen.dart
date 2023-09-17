@@ -182,10 +182,8 @@ class _ActorsByMovie extends ConsumerWidget {
 }
 
 final isFavoriteProvider = FutureProvider.family.autoDispose((ref, int movieId){
-
   final localStorageRepository = ref.watch(localStorageRepositoryProvider);
   return localStorageRepository.isMovieFavorite(movieId);
-
 });
 
 class _CustomSilverAppbar extends ConsumerWidget {
