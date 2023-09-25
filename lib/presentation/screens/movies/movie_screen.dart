@@ -67,54 +67,85 @@ class _MovieDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadiusDirectional.circular(20),
-              child: Image.network(
-                movie.posterPath,
-                width: size.width*0.3,
-              ),
-            ),
+        _TitleAndOverview(movie: movie, size: size, textStyles: textStyles),
 
-        const SizedBox(width: 10,),
-
-        SizedBox(
-          width: (size.width*0.7 ) - 26,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(movie.title, style: textStyles.titleLarge,),
-              Text(movie.overview)
-            ],
-          ),
-        )  
-      ],
-        ),
-        ),
-
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Wrap(
-            children: [
-              ...movie.genreIds.map((genre) => Container(
-                margin: const EdgeInsets.only(right: 10),
-                child: Chip(
-                  label: Text(genre),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                ),
-              ))
-            ],
-          ),
-        ),
+        _Genres(movie: movie),
 
         // show actors
         ActorsByMovie(movieid: movie.id.toString()),
 
         const SizedBox(height: 10,)
       ],
+    );
+  }
+}
+
+class _TitleAndOverview extends StatelessWidget {
+  const _TitleAndOverview({
+    required this.movie,
+    required this.size,
+    required this.textStyles,
+  });
+
+  final Movie movie;
+  final Size size;
+  final TextTheme textStyles;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadiusDirectional.circular(20),
+          child: Image.network(
+            movie.posterPath,
+            width: size.width*0.3,
+          ),
+        ),
+
+    const SizedBox(width: 10,),
+
+    SizedBox(
+      width: (size.width*0.7 ) - 26,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(movie.title, style: textStyles.titleLarge,),
+          Text(movie.overview),
+          MovieRating(voteAverage: movie.voteAverage)
+        ],
+      ),
+    )  
+      ],
+    ),
+    );
+  }
+}
+
+class _Genres extends StatelessWidget {
+  const _Genres({
+    required this.movie,
+  });
+
+  final Movie movie;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: Wrap(
+        children: [
+          ...movie.genreIds.map((genre) => Container(
+            margin: const EdgeInsets.only(right: 10),
+            child: Chip(
+              label: Text(genre),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            ),
+          ))
+        ],
+      ),
     );
   }
 }

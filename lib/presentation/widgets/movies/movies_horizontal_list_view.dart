@@ -111,7 +111,7 @@ class _Slide extends StatelessWidget {
             ),
           ),
 
-          MovieRating(voteAverage: movie.voteAverage, popularity: movie.popularity),
+          MovieRating(voteAverage: movie.voteAverage),
         ],
       )
     );
