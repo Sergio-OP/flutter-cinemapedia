@@ -1,3 +1,4 @@
+export 'package:cinemapedia/presentation/widgets/movies/movie_rating.dart';
 export 'movies/movie_masonry.dart';
 export 'movies/movie_poster_link.dart';
 export 'shared/custom_appbar.dart';
