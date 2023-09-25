@@ -167,6 +167,8 @@ class _CustomSilverAppbar extends ConsumerWidget {
 
     final size = MediaQuery.of(context).size;
 
+    final scaffoldBackground = Theme.of(context).scaffoldBackgroundColor;
+
     return SliverAppBar(
       backgroundColor: Colors.black,
       expandedHeight: size.height * 0.7,
@@ -194,12 +196,17 @@ class _CustomSilverAppbar extends ConsumerWidget {
         ),
       ],
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        /*title: Text(
-          movie.title,
-          style: const TextStyle(fontSize: 20),
-          textAlign: TextAlign.start,
-        ),*/
+        titlePadding: const EdgeInsets.only(bottom: 0),
+        title: _CustomGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.7,1.0],
+          colors: [
+            Colors.transparent,
+            scaffoldBackground
+          ],
+        ),
+
         background: Stack(
           children: [
             SizedBox.expand(
@@ -211,13 +218,6 @@ class _CustomSilverAppbar extends ConsumerWidget {
                   return FadeIn(child: child);
                 },
               ),
-            ),
-
-            const _CustomGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.black54],
-              stops: [0.7, 1.0],
             ),
 
             const _CustomGradient(
