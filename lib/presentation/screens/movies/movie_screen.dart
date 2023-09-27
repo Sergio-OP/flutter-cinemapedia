@@ -1,3 +1,4 @@
+import 'package:cinemapedia/config/helpers/human_formats.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animate_do/animate_do.dart';
@@ -114,7 +115,8 @@ class _TitleAndOverview extends StatelessWidget {
         children: [
           Text(movie.title, style: textStyles.titleLarge,),
           Text(movie.overview),
-          MovieRating(voteAverage: movie.voteAverage)
+          MovieRating(voteAverage: movie.voteAverage),
+          Text('Release date: ${HumanFormats.shortDate(movie.releaseDate)}')
         ],
       ),
     )  
