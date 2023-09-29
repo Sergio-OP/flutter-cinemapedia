@@ -75,6 +75,8 @@ class _MovieDetails extends StatelessWidget {
         // show actors
         ActorsByMovie(movieid: movie.id.toString()),
 
+        SimilarMovies(movieId: movie.id),
+
         const SizedBox(height: 10,)
       ],
     );
