@@ -1,4 +1,4 @@
-import 'package:cinemapedia/domain/entities/movie.dart';
+import '../entities/entities.dart';
 
 abstract class MoviesRepository {
 
@@ -16,6 +16,6 @@ abstract class MoviesRepository {
 
   Future<List<Movie>> getSimilarMovies(int movieId);
 
-  Future<List<String>> getYoutubeVideosById(int movieId);
+  Future<List<Video>> getYoutubeVideosById(int movieId);
   
 }
