@@ -75,6 +75,8 @@ class _MovieDetails extends StatelessWidget {
         // show actors
         ActorsByMovie(movieid: movie.id.toString()),
 
+        VideosFromMovie(movieId: movie.id),
+
         SimilarMovies(movieId: movie.id),
 
         const SizedBox(height: 10,)
@@ -146,16 +148,21 @@ class _Genres extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Wrap(
-        children: [
-          ...movie.genreIds.map((genre) => Container(
-            margin: const EdgeInsets.only(right: 10),
-            child: Chip(
-              label: Text(genre),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            ),
-          ))
-        ],
+      child: SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          alignment: WrapAlignment.center,
+          children: [
+            ...movie.genreIds.map((gender) => Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: Chip(
+                label: Text(gender),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              ),
+            ))
+          ],
+        ),
       ),
     );
   }

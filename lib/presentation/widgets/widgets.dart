@@ -1,3 +1,4 @@
+export 'package:cinemapedia/presentation/widgets/videos/videos_from_movie.dart';
 export 'package:cinemapedia/presentation/widgets/movies/similar_movies.dart';
 export 'package:cinemapedia/presentation/widgets/actors/actors_by_movie.dart';
 export 'package:cinemapedia/presentation/widgets/movies/movie_rating.dart';
